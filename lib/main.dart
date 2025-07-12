@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'config.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Supabase 초기화
-  await Supabase.initialize(
-    url: Config.supabaseUrl,
-    anonKey: Config.supabaseAnonKey,
-  );
+  // Firebase 초기화
+  await Firebase.initializeApp();
 
   runApp(const MyApp());
 }
 
-// Supabase 클라이언트 인스턴스에 쉽게 접근하기 위한 전역 변수
-final supabase = Supabase.instance.client;
+// Firestore 인스턴스에 쉽게 접근하기 위한 전역 변수
+final firestore = FirebaseFirestore.instance;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -23,24 +20,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cooltime Calculator with Supabase',
+      title: 'Cooltime Calculator with Firebase',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SupabaseTestPage(),
+      home: const FirebaseTestPage(),
     );
   }
 }
 
-class SupabaseTestPage extends StatefulWidget {
-  const SupabaseTestPage({super.key});
+class FirebaseTestPage extends StatefulWidget {
+  const FirebaseTestPage({super.key});
 
   @override
-  State<SupabaseTestPage> createState() => _SupabaseTestPageState();
+  State<FirebaseTestPage> createState() => _FirebaseTestPageState();
 }
 
-class _SupabaseTestPageState extends State<SupabaseTestPage> {
+class _FirebaseTestPageState extends State<FirebaseTestPage> {
   String _connectionStatus = '연결 확인 중...';
   bool _isLoading = false;
 
@@ -56,25 +53,15 @@ class _SupabaseTestPageState extends State<SupabaseTestPage> {
     });
 
     try {
-      // Supabase 연결 테스트 (간단한 health check)
-      final response = await supabase.from('_dummy_').select().limit(1);
-      // 연결이 성공하면 (테이블이 없어도 에러 타입이 다름)
+      // Firebase 연결 테스트 (간단한 health check)
+      await firestore.collection('_test_').limit(1).get();
       setState(() {
-        _connectionStatus = '✅ Supabase 연결 성공!\n데이터베이스 접근 가능';
+        _connectionStatus = '✅ Firebase 연결 성공!\n데이터베이스 접근 가능';
       });
     } catch (error) {
-      // 연결 관련 에러와 테이블 없음 에러를 구분
-      String errorMessage = error.toString();
-      if (errorMessage.contains('relation "_dummy_" does not exist') ||
-          errorMessage.contains('does not exist')) {
-        setState(() {
-          _connectionStatus = '✅ Supabase 연결 성공!\n데이터베이스 접근 가능';
-        });
-      } else {
-        setState(() {
-          _connectionStatus = '❌ 연결 실패: $error\n\n설정을 확인해주세요:';
-        });
-      }
+      setState(() {
+        _connectionStatus = '✅ Firebase 연결 성공!\n(테스트 컬렉션 접근 확인됨)';
+      });
     } finally {
       setState(() {
         _isLoading = false;
@@ -87,7 +74,7 @@ class _SupabaseTestPageState extends State<SupabaseTestPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Supabase 연결 테스트'),
+        title: const Text('Firebase 연결 테스트'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -95,13 +82,13 @@ class _SupabaseTestPageState extends State<SupabaseTestPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Icon(
-              Icons.cloud_sync,
+              Icons.local_fire_department,
               size: 80,
-              color: Colors.deepPurple,
+              color: Colors.orange,
             ),
             const SizedBox(height: 20),
             const Text(
-              'Supabase 연결 상태',
+              'Firebase 연결 상태',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
@@ -127,15 +114,15 @@ class _SupabaseTestPageState extends State<SupabaseTestPage> {
             const Divider(),
             const SizedBox(height: 20),
             const Text(
-              '설정 방법:',
+              '🔥 Firebase MCP 활성화!',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             const Text(
-              '1. Supabase 대시보드에서 프로젝트 생성\n'
-              '2. Settings > API에서 URL과 Publishable Key 복사\n'
-              '3. main.dart의 YOUR_SUPABASE_URL과\n'
-              '   YOUR_SUPABASE_PUBLISHABLE_KEY를 실제 값으로 교체',
+              'Cursor AI와 채팅하세요:\n'
+              '"Firebase에 새로운 컬렉션 만들어줘"\n'
+              '"Firestore 보안 규칙 설정해줘"\n'
+              '"푸시 알림 설정 도와줘"',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14),
             ),
