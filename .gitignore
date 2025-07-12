@@ -1,0 +1,127 @@
+# ========================================
+# FLUTTER & DART
+# ========================================
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+**/doc/api/
+
+# Flutter generated files
+.flutter/
+**/generated_plugin_registrant.dart
+
+# ========================================
+# MOBILE PLATFORMS
+# ========================================
+
+# iOS Related
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Pods/
+**/ios/*.mode1v3
+**/ios/*.mode2v3
+**/ios/*.moved-aside
+**/ios/*.pbxuser
+**/ios/*.perspectivev3
+**/ios/Podfile.lock
+**/ios/DerivedData/
+
+# Android Related
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/android/.gradle/
+**/android/captures/
+**/android/gradle-wrapper.jar
+**/android/local.properties
+**/android/key.properties
+**/android/app/*.jks
+
+# ========================================
+# IDE & EDITORS
+# ========================================
+# IntelliJ/Android Studio
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code
+.vscode/
+
+# ========================================
+# OPERATING SYSTEMS
+# ========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ========================================
+# DEVELOPMENT & DEBUGGING
+# ========================================
+# Logs
+*.log
+*.tmp
+
+# Coverage
+coverage/
+
+# Symbolication & Obfuscation
+app.*.symbols
+app.*.map.json
+
+# Test related
+test/coverage/
+
+# ========================================
+# CONFIGURATION & SECRETS
+# ========================================
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# API Keys and sensitive config
+lib/config.dart
+secrets/
+*.pem
+*.key
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+
+# ========================================
+# MISCELLANEOUS
+# ========================================
+*.class
+*.pyc
+*.swp
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
